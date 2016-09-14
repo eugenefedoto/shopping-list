@@ -39,4 +39,39 @@ angular.module('myApp', [])
 
 			return (characters > 0) ? characters : 0;
 		};
-	} )
+
+		$scope.howManyCharactersRemaining = function() {
+			characters = (MAX_LENGTH - $scope.item.length);
+
+			return (characters > 0) ? characters : 0;
+		};
+
+		$scope.howManyCharactersOver = function() {
+			var characters = (MAX_LENGTH - $scope.item.length);
+
+			return (characters < 0) ? Math.abs(characters) : 0;
+		};
+
+		$scope.minimumCharactersMet = function() {
+			return ($scope.howManyMoreCharactersNeeded() == 0);
+		};
+
+		$scope.anyCharactersOver = function() {
+			return ($scope.howManyCharactersOver > 0);
+		};
+
+		$scope.isNumberOfCharactersWithinRange = function() {
+			return (
+				$scope.minimumCharactersMet() &&
+				!$scope.anyCharactersOver()
+			);
+		};
+
+		$scope.goodToGo = function() {
+			return (
+				$scope.isNumberOfCharactersWithinRange() &&
+				$scope.qty > 0 &&
+				$scope.types > 0
+			);
+		};
+	} );
