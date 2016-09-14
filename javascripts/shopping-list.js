@@ -139,4 +139,22 @@ angular.module('myApp', [])
 		};
 
 		$scope.select();
+
+		$scope.update = function(item) {
+			var thisData = 'id=' + item.id;
+			thisData += '&done=' + item.done;
+
+			$http({
+				method: 'POST',
+				url: urlUpdate,
+				data: thisData,
+				headers: {'Content-type' : 'application/x-www-form-urlencoded'}
+			})
+				.success(function(data) {
+					$log.info(data);
+				})
+				.error(function(data, status, headers, config) {
+					throw new Error('Something went wrong with updating record');
+				});
+		};
 	} );
