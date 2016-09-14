@@ -1,8 +1,8 @@
 "use strict";
 
 var app = angular.module('myApp', []);
-app.constant('MAX_LENGTH', 50);
-app.constant('MIN_LENGTH', 2);
+var MAX_LENGTH = 50;
+var MIN_LENGTH = 2;
 
 app.factory('helperFactory', function() {
 		return {
@@ -20,7 +20,7 @@ app.factory('helperFactory', function() {
 		};
 	});
 
-app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', 'MAX_LENGTH', 'MIN_LENGTH', function($scope, $http, $log, MAX_LENGTH, MIN_LENGTH, helperFactory) {
+app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', function($scope, $http, $log, helperFactory) {
 		var urlInsert = '/mod/insert.php';
 		var urlSelect = '/mod/select.php';
 		var urlUpdate = '/mod/update.php';
@@ -40,7 +40,7 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		};
 
 		$scope.howManyCharactersRemaining = function() {
-			characters = (MAX_LENGTH - $scope.item.length);
+			var characters = (MAX_LENGTH - $scope.item.length);
 
 			return (characters > 0) ? characters : 0;
 		};
@@ -56,7 +56,7 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		};
 
 		$scope.anyCharactersOver = function() {
-			return ($scope.howManyCharactersOver > 0);
+			return ($scope.howManyCharactersOver() > 0);
 		};
 
 		$scope.isNumberOfCharactersWithinRange = function() {

@@ -5,13 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>My Shopping List with AngularJS</title>
-	<script src="https://use.fontawesome.com/8e22083acd.js"></script>
 	<link rel="stylesheet" href="css/normalize.css" media="screen">
 	<link rel="stylesheet" href="css/foundation.min.css" media="screen">
 	<link rel="stylesheet" href="css/app-screen.css" media="screen">
 	<link rel="stylesheet" href="css/app-print.css" media="print">
-	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="javascripts/shopping-list.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 <body ng-controller="ShoppingListController">
 	<div class="row">
@@ -22,7 +19,7 @@
 				<div class="row">
 					<div class="column">
 						<span class="spanLabel" ng-show="!minimumCharactersMet()">You need at least {{ howManyMoreCharactersNeeded() }} characters more.</span>
-						<span class="spanLabel" ng-show="isNumberOfCharactersWithinRange()">Remaining characters: {{ howManyCharactersRemaining }}</span>
+						<span class="spanLabel" ng-show="isNumberOfCharactersWithinRange()">Remaining characters: {{ howManyCharactersRemaining() }}</span>
 						<span class="spanLabel warning" ng-show="anyCharactersOver()">{{ howManyCharactersOver() }} characters too many</span>
 					</div>	
 				</div>
@@ -127,5 +124,8 @@
 			</form>
 		</div>
 	</div>
+		<script src="https://use.fontawesome.com/8e22083acd.js"></script>
+	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" ></script>
+	<script src="javascripts/shopping-list.js" type="text/javascript" charset="utf-8" ></script>
 </body>
 </html>
