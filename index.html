@@ -49,7 +49,7 @@
 						<select 
 						name="type"
 						ng-model="type">
-							<option value="">?</option>
+							<option value="{{ type.id }}" ng-repeat="type in types">{{ type.name }}</option>
 						</select>
 					</div>
 				</div>
@@ -58,20 +58,20 @@
 					<div class="column">
 						<div class="show-for-medium-up">
 							<div class="flr">
-								<button type="button" class="small button primary">
+								<button type="button" class="small button primary" ng-click="print()">
 									<i class="fa fa-print"> Print List</i>
 								</button>
 
-								<button type="button" class="small button alert">
+								<button type="button" class="small button alert" ng-click="remove()">
 									<i class="fa fa-time"> Clear Completed</i>
 								</button>
 							</div>
 
-							<button type="submit" class="small button">
+							<button type="submit" class="small button" ng-disabled="!goodToGo()">
 									<i class="fa fa-plus"> Add</i>
 							</button>
 
-							<button type="submit" class="small button secondary">
+							<button type="submit" class="small button secondary" ng-click="clear()">
 									<i class="fa fa-ban"> Clear Entry</i>
 							</button>
 						</div>
@@ -79,22 +79,22 @@
 						<div class="show-for-small-only">
 							<ul class="button-group even-4">
 								<li>
-									<button type="submit" class="small button">
+									<button type="submit" class="small button" ng-disabled="!goodToGo()">
 										<i class="fa fa-plus"></i>
 									</button>
 								</li>
 								<li>
-									<button type="submit" class="small button secondary">
+									<button type="submit" class="small button secondary" ng-click="clear()">
 										<i class="fa fa-ban"></i>
 									</button>
 								</li>
 								<li>
-									<button type="button" class="small button primary">
+									<button type="button" class="small button primary" ng-click="print()">
 										<i class="fa fa-print"></i>
 									</button>
 								</li>
 								<li>
-									<button type="button" class="small button alert">
+									<button type="button" class="small button alert" ng-click="remove()">
 										<i class="fa fa-time"></i>
 									</button>
 								</li>
@@ -105,20 +105,20 @@
 			</form>
 
 			<form id="items">
-				<div class="row">
+				<div class="row" ng-repeat="item in items" ng-class="{ 'done' : item.done == 1 }">
 					<div class="small-8 columns itemName">
-						<label for="item-?">
-							<input type="checkbox" name="item-?" id="item-?">
-							?
+						<label for="item-{{ item.id }}">
+							<input type="checkbox" name="item-{{ item.id }}" id="item-{{ item.id }}" ng-model="item.done" ng-true-value="1" ng-false-value="0" ng-change="update(item)">
+							{{ item.item }}
 						</label>
 					</div>
 
 					<div class="small-2 columns itemQty">
-						?
+						{{ item.qty }}
 					</div>
 
 					<div class="small-2 columns itemType">
-						?
+						{{ item.type_name }}
 					</div>
 				</div>
 			</form>

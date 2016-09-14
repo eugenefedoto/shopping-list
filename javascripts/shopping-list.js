@@ -107,7 +107,7 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 								item : data.item.item,
 								qty : data.item.qty,
 								type : data.item.type,
-								type_name : data. item.type.type_name,
+								type_name : data.item.type.type_name,
 								done : data.item.done
 							});
 
