@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -13,17 +13,17 @@
 	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="/javascripts/shopping-list.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
-<body>
+<body ng-controller="ShoppingListController">
 	<div class="row">
 		<div class="column">
 			<h1>My Shopping List</h1>
 
-			<form id="addForm" accept-charset="utf-8">
+			<form id="addForm" accept-charset="utf-8" ng-submit="insert()">
 				<div class="row">
 					<div class="column">
-						<span class="spanLabel">You need at least ? characters more.</span>
-						<span class="spanLabel">Remaining characters: ?</span>
-						<span class="spanLabel warning">? characters too many</span>
+						<span class="spanLabel" ng-show="!minimumCharactersMet()">You need at least {{ howManyMoreCharactersNeeded() }} characters more.</span>
+						<span class="spanLabel" ng-show="isNumberOfCharactersWithinRange()">Remaining characters: {{ howManyCharactersRemaining }}</span>
+						<span class="spanLabel warning" ng-show="anyCharactersOver()">{{ howManyCharactersOver() }} characters too many</span>
 					</div>	
 				</div>
 
