@@ -26,4 +26,17 @@ angular.module('myApp', [])
 		var urlSelect = '/mod/select.php';
 		var urlUpdate = '/mod/update.php';
 		var urlRemove = '/mod/remove.php';
+
+		$scope.types = [];
+		$scope.items = [];
+
+		$scope.item = '';
+		$scope.qty = '';
+		$scope.types = '';
+
+		$scope.howManyMoreCharactersNeeded = function () {
+			var characters = (MIN_LENGTH - $scope.item.length);
+
+			return (characters > 0) ? characters : 0;
+		};
 	} )
