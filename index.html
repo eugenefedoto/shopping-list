@@ -13,6 +13,60 @@
 	<script src="/javascripts/shopping-list.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 <body>
+	<div class="row">
+		<div class="column">
+			<h1>My Shopping List</h1>
 
+			<form id="addForm" accept-charset="utf-8">
+				<div class="row">
+					<div class="column">
+						<span class="spanLabel">You need at least ? characters more.</span>
+						<span class="spanLabel">Remaining characters: ?</span>
+						<span class="spanLabel warning">? characters too many</span>
+					</div>	
+				</div>
+
+				<div class="row">
+					<div class="large-8 columns">
+						<input type="text" name="item" placeholder="Item">
+					</div>
+
+
+					<div class="large-2 columns">
+						<input type="text" name="qty" placeholder="Qty/Weight">
+					</div>
+
+
+					<div class="large-2 columns">
+						<select name="type">
+							<option value="">?</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="column">
+						<div class="flr">
+							<button type="button" class="small button primary">
+								<i class="fa fa-print"> Print List</i>
+							</button>
+
+							<button type="button" class="small button alert">
+								<i class="fa fa-time"> Clear Completed</i>
+							</button>
+						</div>
+
+						<button type="submit" class="small button">
+								<i class="fa fa-plus"> Add</i>
+						</button>
+
+						<button type="submit" class="small button secondary">
+								<i class="fa fa-ban"> Clear Entry</i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
