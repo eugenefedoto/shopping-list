@@ -2,13 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>My Shopping List with AngularJS</title>
 	<script src="https://use.fontawesome.com/8e22083acd.js"></script>
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/foundation.min.css">
-	<link rel="stylesheet" href="css/app-screen.css">
-	<link rel="stylesheet" href="css/app-print.css">
+	<link rel="stylesheet" href="css/normalize.css" media="screen">
+	<link rel="stylesheet" href="css/foundation.min.css" media="screen">
+	<link rel="stylesheet" href="css/app-screen.css" media="screen">
+	<link rel="stylesheet" href="css/app-print.css" media="print">
 	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" async defer></script>
 	<script src="/javascripts/shopping-list.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
@@ -46,23 +47,50 @@
 
 				<div class="row">
 					<div class="column">
-						<div class="flr">
-							<button type="button" class="small button primary">
-								<i class="fa fa-print"> Print List</i>
+						<div class="show-for-medium-up">
+							<div class="flr">
+								<button type="button" class="small button primary">
+									<i class="fa fa-print"> Print List</i>
+								</button>
+
+								<button type="button" class="small button alert">
+									<i class="fa fa-time"> Clear Completed</i>
+								</button>
+							</div>
+
+							<button type="submit" class="small button">
+									<i class="fa fa-plus"> Add</i>
 							</button>
 
-							<button type="button" class="small button alert">
-								<i class="fa fa-time"> Clear Completed</i>
+							<button type="submit" class="small button secondary">
+									<i class="fa fa-ban"> Clear Entry</i>
 							</button>
 						</div>
-
-						<button type="submit" class="small button">
-								<i class="fa fa-plus"> Add</i>
-						</button>
-
-						<button type="submit" class="small button secondary">
-								<i class="fa fa-ban"> Clear Entry</i>
-						</button>
+						
+						<div class="show-for-small-only">
+							<ul class="button-group even-4">
+								<li>
+									<button type="submit" class="small button">
+										<i class="fa fa-plus"></i>
+									</button>
+								</li>
+								<li>
+									<button type="submit" class="small button secondary">
+										<i class="fa fa-ban"></i>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="small button primary">
+										<i class="fa fa-print"></i>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="small button alert">
+										<i class="fa fa-time"></i>
+									</button>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</form>
