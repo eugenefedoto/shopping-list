@@ -74,4 +74,50 @@ angular.module('myApp', [])
 				$scope.types > 0
 			);
 		};
+
+		function _recordAddedSuccessfully(data) {
+			return (
+				data &&
+				!data.error &&
+				data.item
+			);
+		}
+
+		$scope.clear = function() {
+			$scope.item = '';
+			$scope.qty = '';
+		};
+
+		$scope.insert = function() {
+			if ($scope.goodToGo()) {
+
+				var thisData = 'item=' + $scope.item; 
+				thisData += '&qty=' + $scope.qty; 
+				thisData += '&type=' + $scope.type;
+
+				$http({
+					method : 'POST',
+					url : urlInsert,
+					data :  thisData,
+					headers : {'Content-type' : 'application/x-www-for-urlencoded'}
+				})
+					.success(function(data) {
+						if (_recordAddedSuccessfully(data)) {
+							$scope.items.push({
+								id : data.item.id,
+								item : data.item.item,
+								qty : data.item.qty,
+								type : data.item.type,
+								type_name : data. item.type.type_name,
+								done : data.item.done
+							});
+
+							$scope.clear();
+						}
+					})
+					.error(function(data, status, headers, config) {
+						throw new Error('Something went wrong with inserting record')
+					});
+			}
+		};
 	} );
