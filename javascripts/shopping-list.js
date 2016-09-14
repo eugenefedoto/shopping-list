@@ -120,4 +120,23 @@ angular.module('myApp', [])
 					});
 			}
 		};
+
+		$scope.select = function() {
+			$http.get(urlSelect)
+				.success(function(data) {
+					if (data.items) {
+						$scope.items = data.items;
+					}
+
+					if (data.types) {
+						$scope.types = data.types;
+						$scope.type = $scope.types[0].id;
+					}
+				})
+				.error(function(data, status, headers, config) {
+					throw new Error('Something went wrong with selecting records')
+				});
+		};
+
+		$scope.select();
 	} );
