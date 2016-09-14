@@ -1,10 +1,10 @@
 "use strict";
 
-angular.module('myApp', [])
-	.constant('MAX_LENGTH', 50)
-	.constant('MIN_LENGTH', 2)
+var app = angular.module('myApp', []);
+app.constant('MAX_LENGTH', 50);
+app.constant('MIN_LENGTH', 2);
 
-	.factory('helperFactory', function() {
+app.factory('helperFactory', function() {
 		return {
 			filterFieldArrayByDone : function(thisArray, thisField, thisValue) {
 				var arrayToReturn = [];
@@ -18,10 +18,9 @@ angular.module('myApp', [])
 				return arrayToReturn;
 			}
 		};
-	})
+	});
 
-	.controller('ShoppingListController', function($scope, $http, $log, $help, helperFactory, 
-		MAX_LENGTH, MIN_LENGTH) {
+app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', 'MAX_LENGTH', 'MIN_LENGTH', function($scope, $http, $log, MAX_LENGTH, MIN_LENGTH, helperFactory) {
 		var urlInsert = '/mod/insert.php';
 		var urlSelect = '/mod/select.php';
 		var urlUpdate = '/mod/update.php';
@@ -191,4 +190,4 @@ angular.module('myApp', [])
 		$scope.print = function() {
 			window.print();
 		};
-	});
+	}]);
