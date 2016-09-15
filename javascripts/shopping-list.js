@@ -21,10 +21,10 @@ app.factory('helperFactory', function() {
 	});
 
 app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', function($scope, $http, $log, helperFactory) {
-		var urlInsert = '/shopping-list/mod/insert.php';
-		var urlSelect = '/shopping-list/mod/select.php';
-		var urlUpdate = '/shopping-list/mod/update.php';
-		var urlRemove = '/shopping-list/mod/remove.php';
+		var urlInsert = '/mod/insert.php';
+		var urlSelect = '/mod/select.php';
+		var urlUpdate = '/mod/update.php';
+		var urlRemove = '/mod/remove.php';
 
 		$scope.types = [];
 		$scope.items = [];
@@ -69,18 +69,18 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		$scope.goodToGo = function() {
 			return (
 				$scope.isNumberOfCharactersWithinRange() &&
-				Number($scope.qty) > 0 &&
-				$scope.types.length > 0
+				$scope.qty > 0 &&
+				$scope.types > 0
 			);
 		};
 
 		function _recordAddedSuccessfully(data) {
 			return (
-				data.data &&
-				!data.data.error &&
-				data.data.item
+				data &&
+				!data.error &&
+				data.item
 			);
-		};
+		}
 
 		$scope.clear = function() {
 			$scope.item = '';
@@ -88,39 +88,33 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		};
 
 		$scope.insert = function() {
-
 			if ($scope.goodToGo()) {
 
 				var thisData = 'item=' + $scope.item; 
 				thisData += '&qty=' + $scope.qty; 
 				thisData += '&type=' + $scope.type;
+
 				$http({
 					method : 'POST',
 					url : urlInsert,
-					data : {
-						'item' : $scope.item,
-						'qty' : $scope.qty,
-						'type' : $scope.type
-					}
-				}).then(function(data) {
+					data :  thisData,
+					headers : {'Content-type' : 'application/x-www-for-urlencoded'}
+				})
+					.success(function(data) {
+						if (_recordAddedSuccessfully(data)) {
+							$scope.items.push({
+								id : data.item.id,
+								item : data.item.item,
+								qty : data.item.qty,
+								type : data.item.type,
+								type_name : data.item.type.type_name,
+								done : data.item.done
+							});
 
-							if (_recordAddedSuccessfully(data)) {
-								$scope.items.push({
-
-									id : data.data.item.id,
-									item : data.data.item.item,
-									qty : data.data.item.qty,
-									type : data.data.item.type,
-									type_name : data.data.item.type_name,
-									done : data.data.item.done
-							
-								});
-								
-								//$scope.$apply();
-								$scope.clear();
-							}
-
-					}, function(data, status, headers, config) {
+							$scope.clear();
+						}
+					})
+					.error(function(data, status, headers, config) {
 						throw new Error('Something went wrong with inserting record')
 					});
 			}
@@ -145,30 +139,28 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 
 		$scope.select();
 
-
 		$scope.update = function(item) {
+			var thisData = 'id=' + item.id;
+			thisData += '&done=' + item.done;
 
-				$http({
-					method : 'POST',
-					url : urlUpdate,
-					data : {
-						'id' : item.id,
-						'done' : item.done,
-					}
-				}).then(function(data) {
-
-							//$log.info(data);
-
-					}, function(data, status, headers, config) {
-						throw new Error('Something went wrong with updating record')
-					});
+			$http({
+				method: 'POST',
+				url: urlUpdate,
+				data: thisData,
+				headers: {'Content-type' : 'application/x-www-form-urlencoded'}
+			})
+				.success(function(data) {
+					$log.info(data);
+				})
+				.error(function(data, status, headers, config) {
+					throw new Error('Something went wrong with updating record');
+				});
 		};
-
 
 		function _recordRemovedSuccessfully(data) {
 			return (
-				data.data &&
-				!data.data.error
+				data &&
+				!data.error
 			);
 		}
 
