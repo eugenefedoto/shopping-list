@@ -76,9 +76,9 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 
 		function _recordAddedSuccessfully(data) {
 			return (
-				data &&
-				!data.error &&
-				data.item
+				data.data &&
+				!data.data.error &&
+				data.data.item
 			);
 		};
 
@@ -104,18 +104,22 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 					}
 				}).then(function(data) {
 
-						if (_recordAddedSuccessfully(data)) {
-							$scope.items.push({
-								id : data.item.id,
-								item : data.item.item,
-								qty : data.item.qty,
-								type : data.item.type,
-								type_name : data.item.type.type_name,
-								done : data.item.done
-							});
+							if (_recordAddedSuccessfully(data)) {
+								$scope.items.push({
 
-							$scope.clear();
-						}
+									id : data.data.item.id,
+									item : data.data.item.item,
+									qty : data.data.item.qty,
+									type : data.data.item.type,
+									type_name : data.data.item.type_name,
+									done : data.data.item.done
+							
+								});
+								
+								//$scope.$apply();
+								$scope.clear();
+							}
+
 					}, function(data, status, headers, config) {
 						throw new Error('Something went wrong with inserting record')
 					});

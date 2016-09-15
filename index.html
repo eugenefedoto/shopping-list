@@ -105,7 +105,7 @@
 			</form>
 
 			<form id="items">
-				<div class="row" ng-repeat="item in items" ng-class="{ 'done' : item.done == 1 }">
+				<div class="row" ng-repeat="item in items track by item.id" ng-class="{ 'done' : item.done == 1 }">
 					<div class="small-8 columns itemName">
 						<label for="item-{{ item.id }}">
 							<input type="checkbox" name="item-{{ item.id }}" id="item-{{ item.id }}" ng-model="item.done" ng-true-value="1" ng-false-value="0" ng-change="update(item)">
@@ -124,7 +124,7 @@
 			</form>
 		</div>
 	</div>
-		<script src="https://use.fontawesome.com/8e22083acd.js"></script>
+	<script src="https://use.fontawesome.com/8e22083acd.js"></script>
 	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" ></script>
 	<script src="javascripts/shopping-list.js" type="text/javascript" charset="utf-8" ></script>
 </body>
