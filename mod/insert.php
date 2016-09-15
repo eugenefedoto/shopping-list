@@ -1,17 +1,22 @@
-<?php
+<?php 
 
 try {
 
-	if (empty($_POST['item']) ||
-		empty($_POST['qty']) || 
-		empty($_POST['type'])
-		) {
+	$postdata = file_get_contents("php://input");
+	$request = json_decode($postdata);
+	$item = $request->item;
+	$qty = $request->qty;
+	$type = $request->type;
+
+
+	if (empty($item) ||
+		empty($qty) || 
+		empty($type)
+	) 
+	{
 		throw new PDOException('Invalid request');
 	}
 
-	$item = $_POST['item'];
-	$qty = $_POST['qty'];
-	$type = $_POST['type'];
 
 	$objDb = new PDO('sqlite:../db/shopping-list');
 	$objDb -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

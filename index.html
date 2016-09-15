@@ -15,7 +15,7 @@
 		<div class="column">
 			<h1>My Shopping List</h1>
 
-			<form id="addForm" accept-charset="utf-8" ng-submit="insert()">
+			<form id="addForm" accept-charset="utf-8">
 				<div class="row">
 					<div class="column">
 						<span class="spanLabel" ng-show="!minimumCharactersMet()">You need at least {{ howManyMoreCharactersNeeded() }} characters more.</span>
@@ -67,11 +67,11 @@
 								</button>
 							</div>
 
-							<button type="submit" class="small button" ng-disabled="!goodToGo()">
+							<button type="button" class="small button" ng-disabled="!goodToGo()" ng-click="insert()">
 									<i class="fa fa-plus"> Add</i>
 							</button>
 
-							<button type="submit" class="small button secondary" ng-click="clear()">
+							<button type="button" class="small button secondary" ng-click="clear()">
 									<i class="fa fa-ban"> Clear Entry</i>
 							</button>
 						</div>

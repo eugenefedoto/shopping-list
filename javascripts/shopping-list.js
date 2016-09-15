@@ -21,10 +21,10 @@ app.factory('helperFactory', function() {
 	});
 
 app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', function($scope, $http, $log, helperFactory) {
-		var urlInsert = '/mod/insert.php';
-		var urlSelect = '/mod/select.php';
-		var urlUpdate = '/mod/update.php';
-		var urlRemove = '/mod/remove.php';
+		var urlInsert = '/shopping-list/mod/insert.php';
+		var urlSelect = '/shopping-list/mod/select.php';
+		var urlUpdate = '/shopping-list/mod/update.php';
+		var urlRemove = '/shopping-list/mod/remove.php';
 
 		$scope.types = [];
 		$scope.items = [];
@@ -69,8 +69,8 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		$scope.goodToGo = function() {
 			return (
 				$scope.isNumberOfCharactersWithinRange() &&
-				$scope.qty > 0 &&
-				$scope.types > 0
+				Number($scope.qty) > 0 &&
+				$scope.types.length > 0
 			);
 		};
 
@@ -80,7 +80,7 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 				!data.error &&
 				data.item
 			);
-		}
+		};
 
 		$scope.clear = function() {
 			$scope.item = '';
@@ -88,19 +88,22 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 		};
 
 		$scope.insert = function() {
+
 			if ($scope.goodToGo()) {
 
 				var thisData = 'item=' + $scope.item; 
 				thisData += '&qty=' + $scope.qty; 
 				thisData += '&type=' + $scope.type;
-
 				$http({
 					method : 'POST',
 					url : urlInsert,
-					data :  thisData,
-					headers : {'Content-type' : 'application/x-www-for-urlencoded'}
-				})
-					.success(function(data) {
+					data : {
+						'item' : $scope.item,
+						'qty' : $scope.qty,
+						'type' : $scope.type
+					}
+				}).then(function(data) {
+
 						if (_recordAddedSuccessfully(data)) {
 							$scope.items.push({
 								id : data.item.id,
@@ -113,8 +116,7 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 
 							$scope.clear();
 						}
-					})
-					.error(function(data, status, headers, config) {
+					}, function(data, status, headers, config) {
 						throw new Error('Something went wrong with inserting record')
 					});
 			}
