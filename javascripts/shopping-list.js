@@ -145,28 +145,30 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 
 		$scope.select();
 
-		$scope.update = function(item) {
-			var thisData = 'id=' + item.id;
-			thisData += '&done=' + item.done;
 
-			$http({
-				method: 'POST',
-				url: urlUpdate,
-				data: thisData,
-				headers: {'Content-type' : 'application/x-www-form-urlencoded'}
-			})
-				.success(function(data) {
-					$log.info(data);
-				})
-				.error(function(data, status, headers, config) {
-					throw new Error('Something went wrong with updating record');
-				});
+		$scope.update = function(item) {
+
+				$http({
+					method : 'POST',
+					url : urlUpdate,
+					data : {
+						'id' : item.id,
+						'done' : item.done,
+					}
+				}).then(function(data) {
+
+							//$log.info(data);
+
+					}, function(data, status, headers, config) {
+						throw new Error('Something went wrong with updating record')
+					});
 		};
+
 
 		function _recordRemovedSuccessfully(data) {
 			return (
-				data &&
-				!data.error
+				data.data &&
+				!data.data.error
 			);
 		}
 
