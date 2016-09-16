@@ -21,10 +21,10 @@ app.factory('helperFactory', function() {
 	});
 
 app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', function($scope, $http, $log, helperFactory) {
-		var urlInsert = '/mod/insert.php';
-		var urlSelect = '/mod/select.php';
-		var urlUpdate = '/mod/update.php';
-		var urlRemove = '/mod/remove.php';
+		var urlInsert = '/shopping-list/mod/insert.php';
+		var urlSelect = '/shopping-list/mod/select.php';
+		var urlUpdate = '/shopping-list/mod/update.php';
+		var urlRemove = '/shopping-list/mod/remove.php';
 
 		$scope.types = [];
 		$scope.items = [];
@@ -167,30 +167,40 @@ app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFact
 
 		function _recordRemovedSuccessfully(data) {
 			return (
-				data.data &&
-				!data.data.error
+				data &&
+				!data.error
 			);
 		}
 
 		$scope.remove = function() {
+
 			var removeIds = helperFactory.filterFieldArrayByDone($scope.items, 'id', 1);
 
 			if (removeIds.length > 0) {
+
 				$http({
+
 					method: 'POST',
 					url: urlRemove,
-					data: {
-						'ids' : removeIds.join('|')
-					}
-				}).then(function(data) {
+					data: "ids=" + removeIds.join('|'),
+					headers: {'Content-type' : 'application/x-www-form-urlencoded'}
+
+				})
+					.success(function(data) {
 
 						if (_recordRemovedSuccessfully(data)) {
+
 							$scope.items = $scope.items.filter(function(item) {
+
 								return item.done == 0;
+
 							});
 						}
-					}, function(data, status, headers, config) {
-						throw new Error('Something went wrong with selecting records')
+
+					})
+					.error(function(data, status, headers, config) {
+
+						throw new Error('Something went wrong with updating record');
 					});
 			}
 		};

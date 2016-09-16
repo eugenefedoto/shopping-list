@@ -2,40 +2,35 @@
 
 try {
 
-	$postdata = file_get_contents("php://input");
-	$request = json_decode($postdata);
-	$ids = $request['ids'];
+	if (empty($_POST['ids'])) {
 
-
-	if (empty($ids)) 
-	{
 		throw new PDOException('Invalid request');
 	}
 
+	$ids = $_POST['ids'];
 	$idsArray = explode('|', $ids);
-	$placeHolders = implode(', ', array_fill(0, count($idsArray), '?'));
+	$placeHolders = implode(',', array_fill(0, count($idsArray), '?'));
 
 	$done = empty($done) ? 0 : 1;
 
 	$objDb = new PDO('sqlite:../db/shopping-list');
-	$objDb -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$objDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$sql = "DELETE FROM `items` 
-			WHERE `id` in ({$placeholders})";
+	$sql = "DELETE FROM `items`
+			WHERE `id` IN ({$placeHolders})";
 
 	$statement = $objDb->prepare($sql);
 
 	if (!$statement->execute($idsArray)) {
+
 		throw new PDOException('The execute method failed');
 	}
-
-	$id = $objDb->lastInsertId();
 
 	echo json_encode(array(
 
 		'error' => false
 
-	));
+	), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
 } catch(PDOException $e) {
 	echo json_encode(array(
