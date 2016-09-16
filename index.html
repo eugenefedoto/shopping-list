@@ -15,7 +15,7 @@
 		<div class="column">
 			<h1>My Shopping List</h1>
 
-			<form id="addForm" accept-charset="utf-8" ng-submit="insert()">
+			<form id="addForm" accept-charset="utf-8">
 				<div class="row">
 					<div class="column">
 						<span class="spanLabel" ng-show="!minimumCharactersMet()">You need at least {{ howManyMoreCharactersNeeded() }} characters more.</span>
@@ -63,15 +63,15 @@
 								</button>
 
 								<button type="button" class="small button alert" ng-click="remove()">
-									<i class="fa fa-time"> Clear Completed</i>
+									<i class="fa fa-times"> Clear Completed</i>
 								</button>
 							</div>
 
-							<button type="submit" class="small button" ng-disabled="!goodToGo()">
+							<button type="button" class="small button" ng-disabled="!goodToGo()" ng-click="insert()">
 									<i class="fa fa-plus"> Add</i>
 							</button>
 
-							<button type="submit" class="small button secondary" ng-click="clear()">
+							<button type="button" class="small button secondary" ng-click="clear()">
 									<i class="fa fa-ban"> Clear Entry</i>
 							</button>
 						</div>
@@ -95,7 +95,7 @@
 								</li>
 								<li>
 									<button type="button" class="small button alert" ng-click="remove()">
-										<i class="fa fa-time"></i>
+										<i class="fa fa-times"></i>
 									</button>
 								</li>
 							</ul>
@@ -105,7 +105,7 @@
 			</form>
 
 			<form id="items">
-				<div class="row" ng-repeat="item in items" ng-class="{ 'done' : item.done == 1 }">
+				<div class="row" ng-repeat="item in items track by item.id" ng-class="{ 'done' : item.done == 1 }">
 					<div class="small-8 columns itemName">
 						<label for="item-{{ item.id }}">
 							<input type="checkbox" name="item-{{ item.id }}" id="item-{{ item.id }}" ng-model="item.done" ng-true-value="1" ng-false-value="0" ng-change="update(item)">
@@ -124,7 +124,7 @@
 			</form>
 		</div>
 	</div>
-		<script src="https://use.fontawesome.com/8e22083acd.js"></script>
+	<script src="https://use.fontawesome.com/8e22083acd.js"></script>
 	<script src="javascripts/angular.min.js" type="text/javascript" charset="utf-8" ></script>
 	<script src="javascripts/shopping-list.js" type="text/javascript" charset="utf-8" ></script>
 </body>

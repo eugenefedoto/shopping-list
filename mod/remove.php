@@ -3,28 +3,29 @@
 try {
 
 	$postdata = file_get_contents("php://input");
-	$request = json_decode($postdata, true);
-	$id = $request['id'];
-	$done = $request['done'];
+	$request = json_decode($postdata);
+	$ids = $request['ids'];
 
 
-	if (empty($id)) 
+	if (empty($ids)) 
 	{
 		throw new PDOException('Invalid request');
 	}
+
+	$idsArray = explode('|', $ids);
+	$placeHolders = implode(', ', array_fill(0, count($idsArray), '?'));
 
 	$done = empty($done) ? 0 : 1;
 
 	$objDb = new PDO('sqlite:../db/shopping-list');
 	$objDb -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$sql = "UPDATE `items` 
-			SET `done` = ?
-			WHERE `id` = ?";
+	$sql = "DELETE FROM `items` 
+			WHERE `id` in ({$placeholders})";
 
 	$statement = $objDb->prepare($sql);
 
-	if (!$statement->execute(array($done, $id))) {
+	if (!$statement->execute($idsArray)) {
 		throw new PDOException('The execute method failed');
 	}
 

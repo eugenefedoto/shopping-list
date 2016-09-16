@@ -37,11 +37,11 @@ try {
 		'error' => false,
 		'items' => $items,
 		'types' => $types
-	), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+	));
 
 } catch(PDOException $e) {
 	echo json_encode(array(
 		'error' => true,
 		'message' => $e->getMessage()
-	), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+	));
 }
