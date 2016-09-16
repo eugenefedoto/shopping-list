@@ -21,10 +21,10 @@ app.factory('helperFactory', function() {
 	});
 
 app.controller('ShoppingListController', ['$scope', '$http', '$log', 'helperFactory', function($scope, $http, $log, helperFactory) {
-		var urlInsert = '/shopping-list/mod/insert.php';
-		var urlSelect = '/shopping-list/mod/select.php';
-		var urlUpdate = '/shopping-list/mod/update.php';
-		var urlRemove = '/shopping-list/mod/remove.php';
+		var urlInsert = '/mod/insert.php';
+		var urlSelect = '/mod/select.php';
+		var urlUpdate = '/mod/update.php';
+		var urlRemove = '/mod/remove.php';
 
 		$scope.types = [];
 		$scope.items = [];

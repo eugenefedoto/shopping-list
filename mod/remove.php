@@ -1,5 +1,9 @@
 <?php 
 
+$servername = "mysql11.000webhost.com";
+$username = "a4773789_efedoto";
+$password = "Fluffy!132816";
+
 try {
 
 	if (empty($_POST['ids'])) {
@@ -13,7 +17,7 @@ try {
 
 	$done = empty($done) ? 0 : 1;
 
-	$objDb = new PDO('sqlite:../db/shopping-list');
+	$objDb = new PDO("mysql:host=$servername;dbname=a4773789_myDB", $username, $password);
 	$objDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$sql = "DELETE FROM `items`
